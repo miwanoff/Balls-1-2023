@@ -29,8 +29,54 @@ class Ball {
     this.ctx.fillStyle = "blue";
     this.circle(this.x, this.y, this.radius, true);
   }
+
+  move() {
+    this.x += this.xSpeed;
+    this.y += this.ySpeed;
+  }
+
+  checkCollosion() {
+    if (this.x < 0 || this.x > width) {
+      this.xSpeed = -this.xSpeed;
+    }
+
+    if (this.y < 0 || this.y > height) {
+      this.ySpeed = -this.ySpeed;
+    }
+  }
 }
 
-let ball = new Ball(canvas);
-console.log (ball.x, ball.y, ball.xSpeed, ball.ySpeed);
-ball.draw();
+// let ball = new Ball(canvas);
+// console.log(ball.x, ball.y, ball.xSpeed, ball.ySpeed);
+// ball.draw();
+// ball.move();
+// balls.checkCollosion();
+// console.log(ball.x, ball.y, ball.xSpeed, ball.ySpeed);
+
+class BallsGame {
+  constructor(balls, canvas) {
+    this.ctx = canvas.getContext("2d");
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.balls = balls;
+  }
+
+  clear() {
+    this.ctx.fillStyle = ctx.clearRect(0, 0, width, height);
+  }
+
+  drawBorder() {
+    this.ctx.strokeStyle = "grey";
+    this.ctx.lineWidth = 3;
+    this.ctx.strokeRect(0, 0, this.width, this.height);
+  }
+}
+
+const balls = [];
+for (let i = 0; i < n; i++) {
+  balls[i] = new Ball(canvas);
+}
+
+const ballsGame = new BallsGame(balls, canvas);
+
+ballsGame.drawBorder();
