@@ -36,11 +36,11 @@ class Ball {
   }
 
   checkCollosion() {
-    if (this.x < 0 || this.x > width) {
+    if (this.x < 0 || this.x > this.width) {
       this.xSpeed = -this.xSpeed;
     }
 
-    if (this.y < 0 || this.y > height) {
+    if (this.y < 0 || this.y > this.height) {
       this.ySpeed = -this.ySpeed;
     }
   }
@@ -70,6 +70,20 @@ class BallsGame {
     this.ctx.lineWidth = 3;
     this.ctx.strokeRect(0, 0, this.width, this.height);
   }
+
+  go() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    for (let i = 0; i < 10; i++) {
+      this.balls[i].draw();
+      this.balls[i].move();
+      this.balls[i].checkCollosion();
+    }
+    this.drawBorder();
+  }
+
+  start() {
+    setInterval(this.go.bind(this), 30);
+  }
 }
 
 const balls = [];
@@ -80,3 +94,4 @@ for (let i = 0; i < n; i++) {
 const ballsGame = new BallsGame(balls, canvas);
 
 ballsGame.drawBorder();
+ballsGame.start();
